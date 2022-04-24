@@ -35,7 +35,9 @@ public class Sudoku {
 	
 	public boolean isLegal(int row, int col, int val) {
 		// TODO: check if it's legal to put val at row, col
-		return true;
+		// delegation! Delegate the hard stuff to another method that
+		// we are pretty sure already works!
+		return getLegalValues(row, col).contains(val);
 	}
 	
 	public Collection<Integer> getLegalValues(int row, int col) {
@@ -144,6 +146,16 @@ etc
 			}
 		}
 		return true;
+	}
+	
+	public boolean didTwin() {
+		if (!gameOver()) return false;
+		for (int r = 0; r < 9; r++) {
+			for (int c = 0; c < 9; c++) {
+				if (!isLegal(r, c, board[r][c])) return false;
+			}
+		}
+		return true;	
 	}
 
 	public boolean isBlank(int row, int col) {
