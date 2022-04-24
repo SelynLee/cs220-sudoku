@@ -101,7 +101,7 @@ public class SudokuGUI extends JFrame {
 						if (!sudoku.isLegal(row, col, digit)) {
 							//error
 							JOptionPane.showMessageDialog(null,
-									String.format("%d cannot go in row %d and col %ed", digit, row, col));
+									String.format("%d cannot go in row %d and col %d", digit, row, col));
 						} else {
 							sudoku.set(row, col, digit);
 						}
