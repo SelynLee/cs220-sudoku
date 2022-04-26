@@ -1,12 +1,18 @@
 package knox.sudoku;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+
+import com.sun.javafx.collections.MappingChange.Map;
 
 /**
  * 
@@ -67,6 +73,19 @@ public class Sudoku {
 		return result;
 	}
 	
+	// Checking if there are the same values
+	public HashMap<Integer, Integer> sameValues(int value) {
+		HashMap<Integer,Integer> map = new HashMap<Integer, Integer>();
+		for (int r = 0; r < 9; r++) {
+			for (int c = 0; c < 9; c++) {
+				if (board[r][c] == value) {
+					map.put(r, c);
+				}
+			}
+		}
+		return map;
+	}
+	
 /**
 
 _ _ _ 3 _ 4 _ 8 9
@@ -77,9 +96,9 @@ etc
 0 0 0 3 0 4 0 8 9
 
  */
-	public void load(String filename) {
+	public void load(File file) {
 		try {
-			Scanner scan = new Scanner(new FileInputStream(filename));
+			Scanner scan = new Scanner(file);
 			// read the file
 			for (int r=0; r<9; r++) {
 				for (int c=0; c<9; c++) {
@@ -90,6 +109,10 @@ etc
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public void load(String filename) {
+		load(new File(filename));
 	}
 	
 	/**
@@ -116,6 +139,24 @@ etc
 					result += val + " ";
 				}
 			}
+			result += "\n";
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * Return a string that we can write to a file and then later load from a file
+	 * 
+	 * @return
+	 */
+	public String toFileString() {
+		String result = "";
+		for (int r=0; r<9; r++) {
+			for (int c=0; c<9; c++) {
+				int val = get(r, c);
+				result += val + " ";
+				}
 			result += "\n";
 		}
 		return result;
@@ -163,3 +204,5 @@ etc
 	}
 
 }
+
+// features: time clock , icon, option[easy, medium, hard], highscore, undo, limit number of time that the player can implement wrong. highlight same number
